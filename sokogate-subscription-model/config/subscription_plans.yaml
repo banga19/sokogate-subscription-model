@@ -1,0 +1,143 @@
+subscription_plans:
+  basic:
+    name: "Sokogate Basic"
+    tier: "basic"
+    description: "Perfect for small businesses starting with pre-orders"
+    pricing:
+      monthly: 29.99
+      quarterly: 79.99  # ~10% discount
+      annually: 299.99  # ~17% discount
+    features:
+      preorder_limit_per_month: 10
+      preorder_value_limit: 5000.00  # $5,000 per month
+      early_access_days: 3
+      discount_percentage: 2.5  # 2.5% discount on pre-orders
+      priority_support: false
+      dedicated_account_manager: false
+      custom_reporting: false
+      api_access: true
+      max_products_tracked: 100
+
+  premium:
+    name: "Sokogate Premium"
+    tier: "premium"
+    description: "Ideal for growing businesses with higher pre-order volumes"
+    pricing:
+      monthly: 79.99
+      quarterly: 219.99  # ~8% discount
+      annually: 799.99   # ~17% discount
+    features:
+      preorder_limit_per_month: 50
+      preorder_value_limit: 25000.00  # $25,000 per month
+      early_access_days: 7
+      discount_percentage: 5.0  # 5% discount on pre-orders
+      priority_support: true
+      dedicated_account_manager: false
+      custom_reporting: true
+      api_access: true
+      max_products_tracked: 500
+      advanced_analytics: true
+      bulk_operations: true
+
+  enterprise:
+    name: "Sokogate Enterprise"
+    tier: "enterprise"
+    description: "For large businesses with unlimited pre-order needs"
+    pricing:
+      monthly: 199.99
+      quarterly: 549.99  # ~8% discount
+      annually: 1999.99  # ~17% discount
+    features:
+      preorder_limit_per_month: 0  # unlimited
+      preorder_value_limit: 0.0   # unlimited
+      early_access_days: 14
+      discount_percentage: 7.5  # 7.5% discount on pre-orders
+      priority_support: true
+      dedicated_account_manager: true
+      custom_reporting: true
+      api_access: true
+      max_products_tracked: 0  # unlimited
+      advanced_analytics: true
+      bulk_operations: true
+      custom_integrations: true
+      white_label_options: true
+      sla_guarantee: "99.9%"
+
+# Feature descriptions for marketing/documentation
+feature_descriptions:
+  preorder_limit_per_month: "Maximum number of pre-orders allowed per month"
+  preorder_value_limit: "Maximum total value of pre-orders per month (USD)"
+  early_access_days: "Days of early access to new products before public release"
+  discount_percentage: "Automatic discount applied to all pre-orders"
+  priority_support: "Priority customer support with faster response times"
+  dedicated_account_manager: "Dedicated account manager for personalized service"
+  custom_reporting: "Advanced reporting and analytics dashboard"
+  api_access: "Full API access for integrations"
+  max_products_tracked: "Maximum number of products you can track for pre-orders"
+  advanced_analytics: "Advanced analytics with custom metrics and insights"
+  bulk_operations: "Bulk import/export and batch operations"
+  custom_integrations: "Custom API integrations and webhooks"
+  white_label_options: "White-label branding options"
+  sla_guarantee: "Service level agreement guarantee"
+
+# Trial and promotional options
+trial_options:
+  free_trial_days: 14
+  trial_features: "premium"  # Give trial users premium features
+  require_payment_method: true
+
+promotional_plans:
+  startup_discount:
+    name: "Startup Special"
+    description: "50% off first 3 months for qualified startups"
+    eligibility:
+      - "Company founded within last 2 years"
+      - "Less than 50 employees"
+      - "First-time Sokogate customer"
+    discount_percentage: 50
+    duration_months: 3
+    applicable_tiers: ["basic", "premium"]
+
+  annual_bonus:
+    name: "Annual Plan Bonus"
+    description: "Additional benefits for annual subscribers"
+    benefits:
+      - "2 extra months of early access"
+      - "Priority product roadmap input"
+      - "Quarterly business review sessions"
+    applicable_tiers: ["premium", "enterprise"]
+
+# Add-on services (optional paid features)
+add_ons:
+  premium_support:
+    name: "Premium Support Package"
+    price: 49.99  # per month
+    features:
+      - "24/7 phone support"
+      - "1-hour response time SLA"
+      - "Dedicated support team"
+    available_for: ["basic", "premium"]
+
+  advanced_analytics:
+    name: "Advanced Analytics Suite"
+    price: 29.99  # per month
+    features:
+      - "Custom dashboard creation"
+      - "Advanced data export options"
+      - "Predictive analytics"
+      - "Market trend analysis"
+    available_for: ["basic"]
+
+  extra_preorders:
+    name: "Additional Pre-order Capacity"
+    pricing:
+      basic:
+        additional_orders: 10
+        price: 9.99
+      premium:
+        additional_orders: 25
+        price: 19.99
+    features:
+      - "Increase monthly pre-order limits"
+      - "Flexible scaling"
+    available_for: ["basic", "premium"]
