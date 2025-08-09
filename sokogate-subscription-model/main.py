@@ -10,6 +10,9 @@ from services.subscription_service import SubscriptionService
 from database.init_db import create_database, seed_subscription_plans
 from config.settings import settings
 
+app = FastAPI()
+app.include_router(subscription_router)
+
 # Background task for billing cycle processing
 async def billing_cycle_task():
     """Background task to process billing cycles"""

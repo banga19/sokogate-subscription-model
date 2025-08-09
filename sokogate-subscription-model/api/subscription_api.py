@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 from typing import List, Optional
 from datetime import datetime, timedelta
 from pydantic import BaseModel, validator
-from ..models.subscription import Subscription, SubscriptionPlan, PreOrder, Customer, Product
+from models.subscription import Subscription, SubscriptionPlan, PreOrder, Customer, Product
 from ..services.subscription_service import SubscriptionService
 from ..database import get_db
 
