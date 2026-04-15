@@ -1,5 +1,4 @@
 import os
-from pydantic import field_validator
 from pydantic_settings import BaseSettings
 
 class Settings(BaseSettings):
@@ -7,7 +6,7 @@ class Settings(BaseSettings):
     DATABASE_URL: str = "postgresql://user:password@localhost/sokogate_db"
 
     # CORS
-    ALLOWED_ORIGINS: list[str] = ["http://localhost:3000", "http://localhost:8000"]
+    ALLOWED_ORIGINS: str = "http://localhost:3000,http://localhost:8000"
 
     # Stripe (if used)
     STRIPE_SECRET_KEY: str = ""
@@ -18,11 +17,9 @@ class Settings(BaseSettings):
     TWILIO_ACCOUNT_SID: str = ""
     TWILIO_AUTH_TOKEN: str = ""
 
-    @field_validator("ALLOWED_ORIGINS", mode="before")
-    def parse_allowed_origins(cls, v):
-        if isinstance(v, str):
-            return [origin.strip() for origin in v.split(",") if origin.strip()]
-        return v
+    @property
+    def allowed_origins(self) -> list[str]:
+        return [origin.strip() for origin in self.ALLOWED_ORIGINS.split(",") if origin.strip()]
 
     class Config:
         env_file = ".env"
