@@ -33,7 +33,7 @@ end
 # Unset irrelevant variables.
 deactivate nondestructive
 
-set -gx VIRTUAL_ENV /SokoGate-platform/miniapps/sokogate-subscription-model/sokogate-subscription-model/venv
+set -gx VIRTUAL_ENV /home/apop/git/sokogate-subscription-model/sokogate-subscription-model/venv
 
 set -gx _OLD_VIRTUAL_PATH $PATH
 set -gx PATH "$VIRTUAL_ENV/"bin $PATH
