@@ -104,7 +104,6 @@ class PreOrder(Base):
     
     # Product details
     product_id = Column(Integer, ForeignKey("products.id"), nullable=False)
-    product_variant_id = Column(Integer, ForeignKey("product_variants.id"))
     quantity = Column(Integer, nullable=False)
     unit_price = Column(Float, nullable=False)
     discount_applied = Column(Float, default=0.0)
@@ -168,7 +167,6 @@ class Product(Base):
     name = Column(String(200), nullable=False)
     sku = Column(String(100), unique=True)
     description = Column(Text)
-    category_id = Column(Integer, ForeignKey("categories.id"))
     
     # Pre-order specific
     is_pre_order_eligible = Column(Boolean, default=False)

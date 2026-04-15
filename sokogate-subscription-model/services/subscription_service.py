@@ -2,12 +2,12 @@ from datetime import datetime, timedelta
 from sqlalchemy.orm import Session
 from sqlalchemy import func
 from typing import Optional, List
-from ..models.subscription import (
+from models.subscription import (
     Subscription, SubscriptionPlan, PreOrder, Customer, Product,
     SubscriptionStatus, PreOrderStatus, PaymentFrequency
 )
-from ..services.payment_service import PaymentService
-from ..services.notification_service import NotificationService
+from services.payment_service import PaymentService
+from services.notification_service import NotificationService
 
 class SubscriptionService:
     def __init__(self, db: Session):
@@ -102,7 +102,6 @@ class SubscriptionService:
         subscription_id: int,
         product_id: int,
         quantity: int,
-        product_variant_id: Optional[int] = None,
         priority_level: int = 1
     ) -> PreOrder:
         """Create a pre-order for a subscription"""
@@ -155,7 +154,6 @@ class SubscriptionService:
             subscription_id=subscription_id,
             customer_id=subscription.customer_id,
             product_id=product_id,
-            product_variant_id=product_variant_id,
             quantity=quantity,
             unit_price=unit_price,
             discount_applied=discount_applied * quantity,

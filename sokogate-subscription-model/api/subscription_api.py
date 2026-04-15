@@ -4,8 +4,8 @@ from typing import List, Optional
 from datetime import datetime, timedelta
 from pydantic import BaseModel, validator
 from models.subscription import Subscription, SubscriptionPlan, PreOrder, Customer, Product
-from ..services.subscription_service import SubscriptionService
-from ..database import get_db
+from services.subscription_service import SubscriptionService
+from database import get_db
 
 router = APIRouter(prefix="/api/v1/subscriptions", tags=["subscriptions"])
 
@@ -56,7 +56,6 @@ class SubscriptionResponse(BaseModel):
 
 class PreOrderCreateRequest(BaseModel):
     product_id: int
-    product_variant_id: Optional[int] = None
     quantity: int
     priority_level: int = 1
 
@@ -77,7 +76,6 @@ class PreOrderResponse(BaseModel):
     subscription_id: int
     customer_id: int
     product_id: int
-    product_variant_id: Optional[int]
     quantity: int
     unit_price: float
     discount_applied: float
@@ -249,7 +247,6 @@ async def create_pre_order(
         pre_order = await service.create_pre_order(
             subscription_id=subscription_id,
             product_id=request.product_id,
-            product_variant_id=request.product_variant_id,
             quantity=request.quantity,
             priority_level=request.priority_level
         )
