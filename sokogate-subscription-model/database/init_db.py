@@ -2,8 +2,8 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 import yaml
 from datetime import datetime
-from ..models.subscription import Base, SubscriptionPlan, Customer
-from ..config.settings import DATABASE_URL
+from models.subscription import Base, SubscriptionPlan, Customer
+from config.settings import DATABASE_URL
 
 def load_subscription_plans():
     """Load subscription plans from YAML configuration"""
