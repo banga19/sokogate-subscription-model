@@ -1,4 +1,4 @@
-#!/home/apop/git/sokogate-subscription-model/sokogate-subscription-model/venv/bin/python
+#!/home/apop/SSM/sokogate-subscription-model/sokogate-subscription-model/venv/bin/python3
 import sys
 from rsa.cli import decrypt
 if __name__ == '__main__':

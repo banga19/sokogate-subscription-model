@@ -90,3 +90,4 @@ numpy==1.26.4
 # File handling
 openpyxl==3.1.2  # Excel file handling
 Pillow==10.1.0  # Image processing
+
