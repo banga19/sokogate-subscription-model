@@ -10,8 +10,7 @@ const Login: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const navigate = useNavigate();
-  const { login } = useAuth();
+   const { login } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -110,7 +109,7 @@ const Login: React.FC = () => {
             <p className="text-sm text-gray-600">
               Don't have an account?{' '}
               <button
-                type="button"navigate('/register')
+                type="button"
                 className="font-medium text-blue-600 hover:text-blue-500"
                 onClick={() => navigate('/register')}
               >
