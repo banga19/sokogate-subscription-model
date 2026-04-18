@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { UserPlus, Eye, EyeOff } from 'lucide-react';
 
@@ -17,6 +18,7 @@ const Register: React.FC = () => {
   const [error, setError] = useState('');
 
   const { register } = useAuth();
+  const navigate = useNavigate();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setFormData({
@@ -50,6 +52,7 @@ const Register: React.FC = () => {
         password: formData.password,
         business_type: formData.business_type || undefined
       });
+      navigate('/dashboard');
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Registration failed');
     } finally {
@@ -224,7 +227,7 @@ const Register: React.FC = () => {
               <button
                 type="button"
                 className="font-medium text-blue-600 hover:text-blue-500"
-                onClick={() => window.location.hash = '#login'}
+                onClick={() => navigate('/login')}
               >
                 Sign in
               </button>

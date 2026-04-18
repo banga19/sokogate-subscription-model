@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { LogIn, Eye, EyeOff } from 'lucide-react';
 
@@ -9,7 +10,9 @@ const Login: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
 
+  const navigate = useNavigate();
   const { login } = useAuth();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -18,6 +21,7 @@ const Login: React.FC = () => {
 
     try {
       await login(email, password);
+      navigate('/dashboard');
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Login failed');
     } finally {
@@ -106,9 +110,9 @@ const Login: React.FC = () => {
             <p className="text-sm text-gray-600">
               Don't have an account?{' '}
               <button
-                type="button"
+                type="button"navigate('/register')
                 className="font-medium text-blue-600 hover:text-blue-500"
-                onClick={() => window.location.hash = '#register'}
+                onClick={() => navigate('/register')}
               >
                 Sign up
               </button>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, Link } from 'react-router-dom';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import Login from './components/auth/Login';
 import Register from './components/auth/Register';
@@ -10,6 +10,20 @@ import Subscriptions from './components/Subscriptions';
 import PreOrders from './components/PreOrders';
 import { LogOut } from 'lucide-react';
 
+const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const { user, isLoading } = useAuth();
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600"></div>
+      </div>
+    );
+  }
+
+  return user ? <>{children}</> : <Navigate to="/login" replace />;
+};
+
 const Navigation: React.FC = () => {
   const { user, logout } = useAuth();
 
@@ -19,34 +33,36 @@ const Navigation: React.FC = () => {
         <div className="flex justify-between h-16">
           <div className="flex">
             <div className="flex-shrink-0 flex items-center">
-              <h1 className="text-xl font-bold text-gray-800">Sokogate</h1>
+              <Link to="/" className="text-xl font-bold text-gray-800">
+                Sokogate
+              </Link>
             </div>
             {user && (
               <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
-                <a
-                  href="#dashboard"
+                <Link
+                  to="/dashboard"
                   className="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
                 >
                   Dashboard
-                </a>
-                <a
-                  href="#plans"
+                </Link>
+                <Link
+                  to="/plans"
                   className="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
                 >
                   Plans
-                </a>
-                <a
-                  href="#subscriptions"
+                </Link>
+                <Link
+                  to="/subscriptions"
                   className="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
                 >
                   Subscriptions
-                </a>
-                <a
-                  href="#preorders"
+                </Link>
+                <Link
+                  to="/preorders"
                   className="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
                 >
                   Pre-Orders
-                </a>
+                </Link>
               </div>
             )}
           </div>
@@ -64,18 +80,18 @@ const Navigation: React.FC = () => {
               </div>
             ) : (
               <div className="flex space-x-4">
-                <button
-                  onClick={() => window.location.hash = '#login'}
+                <Link
+                  to="/login"
                   className="text-gray-500 hover:text-gray-700 px-3 py-2 rounded-md text-sm font-medium"
                 >
                   Login
-                </button>
-                <button
-                  onClick={() => window.location.hash = '#register'}
+                </Link>
+                <Link
+                  to="/register"
                   className="bg-blue-600 text-white px-3 py-2 rounded-md text-sm font-medium hover:bg-blue-700"
                 >
                   Sign Up
-                </button>
+                </Link>
               </div>
             )}
           </div>
@@ -104,17 +120,19 @@ const AppContent: React.FC = () => {
         <main className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
           {user ? (
             <Routes>
-              <Route path="/" element={<Dashboard />} />
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/plans" element={<SubscriptionPlans />} />
-              <Route path="/subscriptions" element={<Subscriptions />} />
-              <Route path="/preorders" element={<PreOrders />} />
+              <Route path="/login" element={<Navigate to="/dashboard" replace />} />
+              <Route path="/register" element={<Navigate to="/dashboard" replace />} />
+              <Route path="/" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+              <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+              <Route path="/plans" element={<ProtectedRoute><SubscriptionPlans /></ProtectedRoute>} />
+              <Route path="/subscriptions" element={<ProtectedRoute><Subscriptions /></ProtectedRoute>} />
+              <Route path="/preorders" element={<ProtectedRoute><PreOrders /></ProtectedRoute>} />
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           ) : (
             <Routes>
               <Route path="/" element={<LandingPage />} />
-              <Route path="/dashboard" element={<LandingPage />} />
+              <Route path="/dashboard" element={<Navigate to="/login" replace />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
               <Route path="/plans" element={<SubscriptionPlans />} />

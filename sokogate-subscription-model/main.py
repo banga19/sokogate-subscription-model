@@ -14,28 +14,6 @@ from services.subscription_service import SubscriptionService
 from database.init_db import create_database, seed_subscription_plans, seed_sample_data
 from config.settings import settings
 
-app = FastAPI(
-    title="Sokogate Subscription API",
-    description="B2B Subscription and Pre-Order Management System",
-    version="1.0.0"
-)
-
-# Add CORS middleware
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["http://localhost:5173", "http://localhost:3000"],  # Add your frontend URLs
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
-# Include routers
-app.include_router(auth_router)
-app.include_router(subscription_router)
-app.include_router(customer_router)
-app.include_router(product_router)
-app.include_router(analytics_router)
-
 # Background task for billing cycle processing
 async def billing_cycle_task():
     """Background task to process billing cycles"""
@@ -90,7 +68,11 @@ app.add_middleware(
 )
 
 # Include routers
+app.include_router(auth_router)
 app.include_router(subscription_router)
+app.include_router(customer_router)
+app.include_router(product_router)
+app.include_router(analytics_router)
 
 # Health check endpoint
 @app.get("/health")

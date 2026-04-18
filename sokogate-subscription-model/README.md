@@ -105,7 +105,8 @@ A comprehensive subscription management system for Sokogate's B2B e-commerce pla
 
 ### Prerequisites
 - Python 3.8+
-- PostgreSQL or MySQL database
+- Node.js 18+ (for frontend development)
+- PostgreSQL or MySQL database (or SQLite for development)
 - Redis (for caching)
 - Stripe account (for payments)
 
@@ -144,7 +145,57 @@ python database/init_db.py
 uvicorn main:app --reload
 ```
 
-### Environment Variables
+## Frontend Setup
+
+The frontend is built with React, TypeScript, and Vite.
+
+1. **Navigate to the frontend directory**
+```bash
+cd ui
+```
+
+2. **Install frontend dependencies**
+```bash
+npm install
+```
+
+3. **Start the development server**
+```bash
+npm run dev
+```
+
+The frontend will be available at `http://localhost:5173` (default Vite port).
+
+## Running the Full Application
+
+To run both backend and frontend simultaneously:
+
+1. **Start the backend** (in one terminal):
+```bash
+cd /path/to/sokogate-subscription-model
+source venv/bin/activate
+uvicorn main:app --reload --host 0.0.0.0 --port 8000
+```
+
+2. **Start the frontend** (in another terminal):
+```bash
+cd ui
+npm run dev
+```
+
+3. **Access the application**:
+   - Frontend: `http://localhost:5173`
+   - Backend API: `http://localhost:8000`
+   - API Documentation: `http://localhost:8000/docs` (Swagger UI)
+
+### Environment Configuration
+
+For the frontend to communicate with the backend, ensure the API base URL is correctly set in the frontend code (usually in `src/contexts/AuthContext.tsx` or similar).
+
+### Development Notes
+- The backend includes CORS middleware to allow requests from the frontend.
+- For production deployment, configure the frontend build and backend accordingly.
+- Database migrations can be run with `alembic upgrade head` if using Alembic for schema changes.
 ```env
 DATABASE_URL=postgresql://user:password@localhost/sokogate_subscriptions
 STRIPE_SECRET_KEY=sk_test_your_stripe_key
