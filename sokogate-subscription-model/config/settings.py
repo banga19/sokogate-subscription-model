@@ -3,10 +3,13 @@ from pydantic_settings import BaseSettings
 
 class Settings(BaseSettings):
     # Database
-    DATABASE_URL: str = "postgresql://user:password@localhost/sokogate_db"
+    DATABASE_URL: str = "sqlite:///./sokogate.db"
+
+    # Security
+    SECRET_KEY: str = "your-secret-key-change-in-production"
 
     # CORS
-    ALLOWED_ORIGINS: str = "http://localhost:3000,http://localhost:8000"
+    ALLOWED_ORIGINS: str = "http://localhost:3000,http://localhost:5173,http://localhost:8000"
 
     # Stripe (if used)
     STRIPE_SECRET_KEY: str = ""

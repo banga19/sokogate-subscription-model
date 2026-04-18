@@ -1,8 +1,8 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 import yaml
-from datetime import datetime
-from models.subscription import Base, SubscriptionPlan, Customer
+from datetime import datetime, timedelta
+from models.subscription import Base, SubscriptionPlan, Customer, Product
 from config.settings import settings
 
 DATABASE_URL = settings.DATABASE_URL
@@ -64,8 +64,8 @@ def seed_subscription_plans(engine):
     finally:
         db.close()
 
-def create_sample_data(engine):
-    """Create sample customers and data for testing"""
+def seed_sample_data(engine):
+    """Seed the database with sample data"""
     SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
     db = SessionLocal()
     
@@ -145,8 +145,76 @@ def create_sample_data(engine):
                 customer = Customer(**customer_data)
                 db.add(customer)
         
+        # Sample products
+        sample_products = [
+            {
+                "name": "Industrial Automation Controller",
+                "sku": "IAC-001",
+                "description": "Advanced industrial automation controller with IoT capabilities",
+                "is_pre_order_eligible": True,
+                "pre_order_start_date": datetime.utcnow(),
+                "pre_order_end_date": datetime.utcnow() + timedelta(days=30),
+                "expected_availability_date": datetime.utcnow() + timedelta(days=60),
+                "pre_order_limit": 100,
+                "base_price": 2500.00,
+                "pre_order_price": 2200.00
+            },
+            {
+                "name": "Smart Manufacturing Sensor Suite",
+                "sku": "SMS-002", 
+                "description": "Complete sensor suite for smart manufacturing applications",
+                "is_pre_order_eligible": True,
+                "pre_order_start_date": datetime.utcnow(),
+                "pre_order_end_date": datetime.utcnow() + timedelta(days=45),
+                "expected_availability_date": datetime.utcnow() + timedelta(days=75),
+                "pre_order_limit": 50,
+                "base_price": 1800.00,
+                "pre_order_price": 1600.00
+            },
+            {
+                "name": "Enterprise Data Analytics Platform",
+                "sku": "EDAP-003",
+                "description": "Comprehensive data analytics platform for enterprise use",
+                "is_pre_order_eligible": False,
+                "base_price": 5000.00
+            },
+            {
+                "name": "Cloud Integration Gateway",
+                "sku": "CIG-004",
+                "description": "Secure cloud integration gateway for legacy systems",
+                "is_pre_order_eligible": True,
+                "pre_order_start_date": datetime.utcnow() - timedelta(days=5),
+                "pre_order_end_date": datetime.utcnow() + timedelta(days=25),
+                "expected_availability_date": datetime.utcnow() + timedelta(days=45),
+                "pre_order_limit": 75,
+                "base_price": 3200.00,
+                "pre_order_price": 2900.00
+            },
+            {
+                "name": "AI-Powered Quality Control System",
+                "sku": "AIQC-005",
+                "description": "AI-powered quality control and defect detection system",
+                "is_pre_order_eligible": True,
+                "pre_order_start_date": datetime.utcnow(),
+                "pre_order_end_date": datetime.utcnow() + timedelta(days=60),
+                "expected_availability_date": datetime.utcnow() + timedelta(days=90),
+                "pre_order_limit": 25,
+                "base_price": 7500.00,
+                "pre_order_price": 6800.00
+            }
+        ]
+        
+        for product_data in sample_products:
+            existing_product = db.query(Product).filter(
+                Product.sku == product_data["sku"]
+            ).first()
+            
+            if not existing_product:
+                product = Product(**product_data)
+                db.add(product)
+        
         db.commit()
-        print("Sample customers created successfully!")
+        print("Sample data created successfully!")
         
     except Exception as e:
         db.rollback()

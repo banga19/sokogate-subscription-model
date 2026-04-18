@@ -141,6 +141,11 @@ class Customer(Base):
     contact_email = Column(String(100), nullable=False, unique=True)
     contact_phone = Column(String(20))
     
+    # Authentication
+    password_hash = Column(String(200))
+    is_email_verified = Column(Boolean, default=False)
+    email_verification_token = Column(String(100))
+    
     # Business details
     business_type = Column(String(50))
     tax_id = Column(String(50))
